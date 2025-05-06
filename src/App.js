@@ -88,11 +88,14 @@ class App {
   };
   #cameraSetPosition = () => {
     this.#camera.position.z = 100;
+    this.#camera.position.y = 25;
   };
   #sceneSetBackground = (color) => {
     this.#scene.background = color
       ? new THREE.Color(color) //如果color存在/可用
       : new THREE.Color(0x4287f5); //否则就default 场景色
+
+    this.background = this.#scene.background.getStyle();
   };
 
   #addKeyControl = () => {
@@ -159,6 +162,19 @@ class App {
   }
   get control() {
     return this.#control;
+  }
+
+  get setting() {
+    return this.#setting;
+  }
+  get backgroundColor() {
+    return this.#backgroundColor;
+  }
+  get sceneSetBackground() {
+    return this.#sceneSetBackground;
+  }
+  set sceneSetBackground(value) {
+    this.#sceneSetBackground(value);
   }
 }
 

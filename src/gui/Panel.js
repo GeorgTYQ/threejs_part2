@@ -11,7 +11,6 @@ class Panel {
   #model = null;
   #app = null;
   #gui = new GUI();
-  #autoRotate_on_off = true;
 
   #axesHelper = null;
   #gridHelper = null;
@@ -35,10 +34,13 @@ class Panel {
       this.#control.autoRotate = !this.#control.autoRotate;
       this.#updateAutoRotateState();
     },
+    resetAll: () => {
+      this.#control.reset();
+      this.#app.setting();
+      this.#updateAutoRotateState();
+    },
   };
   #updateAutoRotateState = () => {
-    console.log(this.#control.autoRotate);
-
     this.controlAutoRotateHandler.name(
       "Auto Rotate: " + this.#control.autoRotate
     );
@@ -50,8 +52,24 @@ class Panel {
     const controlFolder = this.#gui.addFolder("Auto Control ");
     this.controlAutoRotateHandler = controlFolder
       .add(this.#buttonFunction, "autoRotate")
-      .name("Auto Rotate: " + this.#control.autoRotate)
       .listen();
+    this.#updateAutoRotateState();
+    controlFolder
+      .add(this.#control, "autoRotateSpeed", -5, 5, 0.1)
+      .name("Auto Rotate Speed")
+      .listen();
+    //初始化
+    const controlResetPosition = controlFolder
+      .add(this.#buttonFunction, "resetAll")
+      .name("Reset All");
+
+    controlFolder
+      .addColor(this.#app, "background")
+      .name("Background Color")
+      .listen()
+      .onChange((e) => {
+        this.#app.sceneSetBackground(e);
+      });
 
     controlFolder.open();
   };

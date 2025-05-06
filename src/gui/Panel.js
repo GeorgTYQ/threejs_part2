@@ -34,6 +34,9 @@ class Panel {
       this.#control.autoRotate = !this.#control.autoRotate;
       this.#updateAutoRotateState();
     },
+    resetRotationSpeed: () => {
+      this.#control.autoRotateSpeed = 2;
+    },
     resetAll: () => {
       this.#control.reset();
       this.#app.setting();
@@ -59,6 +62,10 @@ class Panel {
       .name("Auto Rotate Speed")
       .listen();
     //初始化
+    const controlResetRotationSpeed = controlFolder
+      .add(this.#buttonFunction, "resetRotationSpeed")
+      .name("Reset Rotation Speed")
+      .listen();
     const controlResetPosition = controlFolder
       .add(this.#buttonFunction, "resetAll")
       .name("Reset All");

@@ -134,7 +134,7 @@ class App {
   };
   #animate = () => {
     requestAnimationFrame(this.#animate);
-
+    this.#control.update();
     this.#render();
   };
 
